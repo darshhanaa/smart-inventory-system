@@ -11,10 +11,11 @@ class Inventory:
 
     def add_product(self, product):
         self.products.append(product)
+        print("\n✅ Product added successfully!")
 
     def view_products(self):
         if not self.products:
-            print("Inventory is empty.")
+            print("\nInventory is empty.")
             return
 
         print("\n========== Inventory ==========")
