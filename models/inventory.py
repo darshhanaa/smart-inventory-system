@@ -29,3 +29,24 @@ class Inventory:
                 return product
 
         return None
+
+    def update_product(self, product_id, name, category, price, quantity):
+        product = self.search_product(product_id)
+
+        if product:
+            product.name = name
+            product.category = category
+            product.price = price
+            product.quantity = quantity
+            return True
+
+        return False
+
+    def delete_product(self, product_id):
+        product = self.search_product(product_id)
+
+        if product:
+            self.products.remove(product)
+            return True
+
+        return False

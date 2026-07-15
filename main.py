@@ -9,7 +9,9 @@ def display_menu():
     print("1. Add Product")
     print("2. View Products")
     print("3. Search Product")
-    print("4. Exit")
+    print("4. Update Product")
+    print("5. Delete Product")
+    print("6. Exit")
 
 
 def main():
@@ -26,18 +28,10 @@ def main():
             product_id = input("Enter Product ID: ")
             name = input("Enter Product Name: ")
             category = input("Enter Category: ")
-
             price = float(input("Enter Price: "))
             quantity = int(input("Enter Quantity: "))
 
-            product = Product(
-                product_id,
-                name,
-                category,
-                price,
-                quantity
-            )
-
+            product = Product(product_id, name, category, price, quantity)
             inventory.add_product(product)
 
         elif choice == "2":
@@ -57,6 +51,45 @@ def main():
                 print("\n❌ Product not found.")
 
         elif choice == "4":
+            print("\n========== Update Product ==========")
+
+            product_id = input("Enter Product ID: ")
+
+            product = inventory.search_product(product_id)
+
+            if product:
+                print("\nCurrent Details:")
+                print(product)
+
+                name = input("Enter New Name: ")
+                category = input("Enter New Category: ")
+                price = float(input("Enter New Price: "))
+                quantity = int(input("Enter New Quantity: "))
+
+                inventory.update_product(
+                    product_id,
+                    name,
+                    category,
+                    price,
+                    quantity
+                )
+
+                print("\n✅ Product updated successfully!")
+
+            else:
+                print("\n❌ Product not found.")
+
+        elif choice == "5":
+            print("\n========== Delete Product ==========")
+
+            product_id = input("Enter Product ID: ")
+
+            if inventory.delete_product(product_id):
+                print("\n✅ Product deleted successfully!")
+            else:
+                print("\n❌ Product not found.")
+
+        elif choice == "6":
             print("\nThank you for using Smart Inventory System!")
             break
 
