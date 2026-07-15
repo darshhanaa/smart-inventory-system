@@ -1,4 +1,5 @@
 from models.product import Product
+from utils.file_handler import load_data, save_data
 
 
 class Inventory:
@@ -8,9 +9,38 @@ class Inventory:
 
     def __init__(self):
         self.products = []
+        self.load_inventory()
+
+    def load_inventory(self):
+        data = load_data()
+
+        for item in data:
+            product = Product(
+                item["product_id"],
+                item["name"],
+                item["category"],
+                item["price"],
+                item["quantity"]
+            )
+            self.products.append(product)
+
+    def save_inventory(self):
+        data = []
+
+        for product in self.products:
+            data.append({
+                "product_id": product.product_id,
+                "name": product.name,
+                "category": product.category,
+                "price": product.price,
+                "quantity": product.quantity
+            })
+
+        save_data(data)
 
     def add_product(self, product):
         self.products.append(product)
+        self.save_inventory()
         print("\n✅ Product added successfully!")
 
     def view_products(self):
@@ -38,6 +68,8 @@ class Inventory:
             product.category = category
             product.price = price
             product.quantity = quantity
+
+            self.save_inventory()
             return True
 
         return False
@@ -47,6 +79,7 @@ class Inventory:
 
         if product:
             self.products.remove(product)
+            self.save_inventory()
             return True
 
         return False
